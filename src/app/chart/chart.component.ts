@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import Chart from 'chart.js/auto';
 import { UserLog } from '../models/user';
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -34,36 +33,42 @@ export class ChartComponent implements OnInit {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
   };
   constructor() {
-    //this.User_Data = this.User_logs;
+    
     
    }
   
 
 
   ngOnInit(): void {
-    // let filteredLogs = this.logs[0]["series"].forEach(function(val){
-    //   console.log()
-    // })
+    
+    this.LoadChartInfo();
+  }
 
+  LoadChartInfo()
+  {
     let seriesData  = this.logs[0]["series"];
     var result = _(seriesData)
-  .groupBy(time => time.name.split(' ').shift())
-  .value();
+                  .groupBy(time => time.name.split(' ').shift())
+                .value();
   let finalResult:any = [];
+  
  Object.keys(result).forEach(function(val){
   let newObj:any = {};
   newObj["name"]=val;
   let totalRevenue =0;
+
   result[val].forEach(function(sData){
     totalRevenue+=sData.value;
   })
+
   newObj["value"] = totalRevenue;
   finalResult.push(newObj);
   });
+  
   let sortedFinalResult = _.sortBy(finalResult, 
     [function(o) { return o.name; }]);
   this.logs[0]["series"] = sortedFinalResult;
-    let label:any = "Conversions" +moment(sortedFinalResult[0]["name"]).format("MM/DD").toString();
+    let label:any = "Conversions " +moment(sortedFinalResult[0]["name"]).format("MM/DD").toString();
     label =label +"-"+ moment(sortedFinalResult[sortedFinalResult.length-1]["name"]).format("MM/DD").toString();
     this.legendTitle = label;
     this.User_Data = Object.assign([], this.logs);

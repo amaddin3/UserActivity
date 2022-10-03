@@ -1,8 +1,10 @@
 [build]
     publish = "dist/user-activity"
-    command = "ng build --prod"
+    command = "ng build"
     functions = "./netlify/functions"
+    targetPort = 8888
 [[redirects]]
     from = "/*"
     to   = "/index.html"
     status = 200
+    targetPort = 8888
