@@ -11,7 +11,7 @@ import { LegendPosition } from '@swimlane/ngx-charts';
 })
 export class ChartComponent implements OnInit {
   public chart: any;
-  view:any = [200,200];
+  view:any = [150,150];
   @Input() logs:any[]=[];
  
   public User_Data : any;
