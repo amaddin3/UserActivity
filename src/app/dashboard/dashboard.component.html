@@ -1,0 +1,11 @@
+<div
+  *ngIf="finalData"
+  fxLayout="row wrap"
+  fxLayout.xs="column wrap"
+  fxLayoutAlign="space-evenly end"
+  fxLayoutGap="25px"
+>
+  <div *ngFor="let user of finalData">
+    <app-user [User_Details]="user"></app-user>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+#rcorners2 {
+    border-radius: 25px;
+    border: 4px solid black;
+    padding: 20px;
+    margin: 20px;
+    width: 600px;
+    //height: 00px;
+  }
+  .test {
+    width: 75px;
+    height: 75px;
+    background-color: rgb(33, 179, 228);
+    align-items:stretch;
+    text-align:center;
+    border-radius: 50%;
+  }
+  .container1 {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+  }
+  

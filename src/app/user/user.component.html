@@ -1,0 +1,46 @@
+<div class="outerContainer" id="rcorners2">
+  <div fxLayout="row" fxLayout.sm="column" fxLayoutGap="10px">
+    <div fxLayoutAlign="center center">
+      <div fxLayout="column" fxLayout.sm="row" fxLayoutGap="10px">
+        <div class="test">
+          <h1>
+            <b>{{ User_Details.Name[0] }} </b>
+          </h1>
+        </div>
+        <div>
+          <app-chart [logs]="User_Details.userLogs"></app-chart>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="2 1 auto" fxLayoutAlign="center top">
+      <div fxLayout="column" fxLayout.sm="row" fxLayoutGap="10px">
+        <div>
+          <h5 class="card-title">{{ User_Details.Name }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            {{ User_Details.occupation }}
+          </h6>
+        </div>
+
+        <div>
+          <h6 style="color: orange" class="card-title">
+            {{ User_Details.userImpressions | number }}
+          </h6>
+          <h6 class="card-subtitle mb-2 text-muted">impressions</h6>
+        </div>
+        <div>
+          <h6 style="color: lightskyblue" class="card-title">
+            {{ User_Details.userConversions | number: ".0-0" }}
+          </h6>
+          <h6 class="card-subtitle mb-2 text-muted">conversions</h6>
+        </div>
+        <div>
+          <h6 style="color: green" class="card-title">
+            {{
+              User_Details.userTotalRevenue | currency: "USD":"symbol":"1.0-0"
+            }}
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
