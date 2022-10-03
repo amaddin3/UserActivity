@@ -1,6 +1,6 @@
 [build]
     publish = "dist/user-activity"
-    command = "ng build --prod"
+    command = "ng build --configuration production"
     functions = "./netlify/functions"
     targetPort = 8888
 [[redirects]]
