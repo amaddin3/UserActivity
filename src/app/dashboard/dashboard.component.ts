@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserLog } from '../models/user';
+import { dashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,28 +13,30 @@ export class DashboardComponent implements OnInit {
   logs: any =[];
   finalData: any =[];
   private baseUrl = window.location.origin;
-  constructor(private http:HttpClient) { }
+  dashboardService: dashboardService;
+  constructor(private http:HttpClient,dashboardService:dashboardService) { 
+    this.dashboardService = dashboardService;
+  }
 
   ngOnInit(): void {
       this.LoadUserData();
   }
 
   LoadUserData(){
-    this.http.get(`${this.baseUrl}/.netlify/functions/users`)
-            .subscribe({
-              next :(data:any) =>{
-                this.users = data.data;
-                this.http.get("assets/logs.json").subscribe(_logs =>{
-                  this.logs = _logs;
-                  let mergedData = this.MergeUserAndLogData();
-                  this.finalData = this.finalCardDataForUserCollection(mergedData);
-                })
-              },
-              error: (err:any)=>{
-                console.log(err);
-                alert('Error:'+err.error);
-              },
-            });
+     this.dashboardService.getUsers().subscribe({
+      next :(data:any) =>{
+                    this.users = data.data;
+                    this.dashboardService.getLogs().subscribe((_logs:any) =>{
+                      this.logs = _logs;
+                      let mergedData = this.MergeUserAndLogData();
+                      this.finalData = this.finalCardDataForUserCollection(mergedData);
+                    })
+                  },
+                  error: (err:any)=>{
+                                console.log(err);
+                                alert('Error:'+err.error);
+                              }
+    })
   }
 
   MergeUserAndLogData(){
@@ -41,9 +44,10 @@ export class DashboardComponent implements OnInit {
     let users = this.users;
     let logs = this.logs;
     let userMap:any = {};
+
     users.forEach(function(_user:any){
       userMap[_user.fields["Id"]] = _user.fields;
-    })
+    });
     logs.forEach((log:any) => {
       if(userMap[log.user_id])
       {

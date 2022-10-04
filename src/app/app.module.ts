@@ -9,6 +9,7 @@ import { UserComponent } from './user/user.component';
 import { ChartComponent } from './chart/chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { dashboardService } from './dashboard/dashboard.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     NgxChartsModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    dashboardService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
