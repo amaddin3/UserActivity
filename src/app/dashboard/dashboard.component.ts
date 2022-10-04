@@ -12,6 +12,8 @@ export class DashboardComponent implements OnInit {
   users: any =[];
   logs: any =[];
   finalData: any =[];
+  public userData: any =[];
+  public logData: any = [];
   private baseUrl = window.location.origin;
   dashboardService: dashboardService;
   constructor(private http:HttpClient,dashboardService:dashboardService) { 
@@ -23,21 +25,21 @@ export class DashboardComponent implements OnInit {
   }
 
   LoadUserData(){
-     this.dashboardService.getUsers().subscribe({
-      next :(data:any) =>{
-                    this.users = data.data;
-                    this.dashboardService.getLogs().subscribe((_logs:any) =>{
-                      this.logs = _logs;
-                      let mergedData = this.MergeUserAndLogData();
-                      this.finalData = this.finalCardDataForUserCollection(mergedData);
-                    })
-                  },
-                  error: (err:any)=>{
-                                console.log(err);
-                                alert('Error:'+err.error);
-                              }
-    })
-  }
+    this.dashboardService.requestDataFromMultipleSources().subscribe(
+      {
+        next:(responseList:any)=>{
+            this.users = responseList[0].data;
+            this.logs = responseList[1];
+            let mergedData = this.MergeUserAndLogData();
+            this.finalData = this.finalCardDataForUserCollection(mergedData);
+        },
+        error: (err:any)=>{
+                    console.log(err);
+                    alert('Error:'+err.error);
+                  }  
+      });
+    }
+   
 
   MergeUserAndLogData(){
     let mergedCardData:any = {};

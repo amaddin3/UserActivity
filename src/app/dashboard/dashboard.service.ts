@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { forkJoin, Observable } from "rxjs";
 
 
 
@@ -13,13 +13,10 @@ export class dashboardService{
 
     }
 
-    getUsers():Observable<any[]>{
-        return this.http.get<any[]>(`${this.baseUrl}/.netlify/functions/users`);
-    }
-
-    getLogs():Observable<any[]>{
-        return this.http.get<any[]>("assets/logs.json");
-    }
-
+    requestDataFromMultipleSources(): Observable<any[]> {
+        let userData = this.http.get<any[]>(`${this.baseUrl}/.netlify/functions/users`);
+        let logData = this.http.get<any[]>("assets/logs.json")
+        return forkJoin([userData, logData]);
+    }   
 
 }
